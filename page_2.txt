@@ -1,0 +1,78 @@
+PARAMS_ORDER_MARKET = ['symbol', 'side', 'quantity']
+PARAMS_ORDER_LIMIT = ['symbol', 'side', 'price', 'quantity']
+PARAMS_POSITION_CLOSE = ['symbol', 'side', 'quantity']
+PARAMS_ORDER_CANCEL_LIMIT = ['symbol']
+PARAMS_ORDER_CANCEL_STOP = []
+
+PARAMS_ORDER_STOP = ['symbol', 'side', 'price', 'quantity']
+PARAMS_ORDER_TP_SL = ['symbol', 'tp', 'sl', 'side']
+
+# HEADER ---------- BUY MARKET ORDER
+
+Example: symbol='PERP_BTC_USDT', side='buy', type='buy', price=123, quantity=123
+
+Parameters:
+- side : buy , sell
+- type : buy (this would set [order_type=MARKET] )
+
+Description:
+Sed ut perspiciatis unde omnis iste natus error 
+sit voluptatem accusantium doloremque laudantium, 
+totam rem aperiam, eaque ipsa Sed ut perspiciatis 
+unde omnis iste natus error 
+    
+
+
+# ---------- BUY LIMIT ORDER
+Tradingview Payload = 
+    symbol='PERP_BTC_USDT', side='buy', type='limit', price=123, quantity=123
+    side : buy , sell
+    type : buy-limit (this would set [order_type=LIMIT] )
+
+
+# ---------- BUY STOP ORDER
+Tradingview Payload = 
+    symbol='PERP_BTC_USDT', side='buy', type='stop', price=123, quantity=123
+    side : buy , sell
+    type : buy-stop (this would set [orderCombinationType='STOP_MARKET'], [algoType='STOP'] and [type='MARKET'] )
+
+
+
+
+# ---------- CANCEL PENDING ORDER
+Tradingview Payload = symbol='PERP_BTC_USDT', side='buy', type='cancel'
+
+- side
+
+# ---------- SET TAKE PROFIT / STOP LOSS
+method_message = POST /v3/algo/order
+
+{
+    "symbol": "SPOT_BAL_USDT",
+    "reduceOnly": false,
+    "algoType": "POSITIONAL_TP_SL",
+    "childOrders": [
+        {
+            "algoType": "TAKE_PROFIT",
+            "type": "CLOSE_POSITION",
+            "side": "BUY",
+            "reduceOnly": true,
+            "triggerPrice": "72"
+        },
+        {
+            "algoType": "STOP_LOSS",
+            "type": "CLOSE_POSITION",
+            "side": "BUY",
+            "reduceOnly": true,
+            "triggerPrice": "74"
+        }
+    ]
+}
+
+# ---------- CLOSE LONG POSITION
+
+method_message = DELETE /v1/orders
+
+symbol=PERP_BTC_USDT
+
+Tradingview Payload = symbol='PERP_BTC_USDT', type='close'
